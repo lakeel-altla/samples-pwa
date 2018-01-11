@@ -1,0 +1,17 @@
+version: '2'
+services:
+  data:
+    build: ./data
+    container_name: data-pwa-web-push
+  app:
+    build: ./app
+    container_name: pwa-web-push
+    ports: 
+      - 7000:7000
+    volumes_from:
+      - data
+  notification:
+    build: ./notification
+    container_name: notification-server
+    volumes:
+      - ./notification/src/config:/usr/src/notification/config

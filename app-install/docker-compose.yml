@@ -1,0 +1,12 @@
+version: '2'
+services:
+  data:
+    build: ./data
+    container_name: data-pwa-app-install
+  app:
+    build: ./app
+    container_name: pwa-app-install
+    ports: 
+      - 3000:3000
+    volumes_from:
+      - data

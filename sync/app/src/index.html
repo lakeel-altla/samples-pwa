@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Service Worker Test</title>
+    <link rel="manifest" href="./manifest.json">
+</head>
+
+<body>
+    <button id="sync-data">Sync</button>
+
+    <script type="text/javascript">
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     console.log('DOMContentLoaded')
+
+        navigator.serviceWorker.register('./service-worker.js');
+
+        navigator.serviceWorker.ready
+            .then((registration) => {
+
+                document.querySelector('#sync-data')
+                    .onclick = function () {
+                        var DB_NAME = 'sampleDB';
+                        var STORE_NAME = 'messsage';
+                        var INDEXED_DB_VERSION = 1;
+
+                        var openReq = indexedDB.open(DB_NAME, INDEXED_DB_VERSION);
+
+                        openReq.onupgradeneeded = function (event) {
+                            console.log('onupgradeneeded')
+                            var db = event.target.result;
+                            db.createObjectStore(STORE_NAME, { keyPath: 'id' })
+                        }
+
+                        openReq.onsuccess = function (event) {
+                            console.log('DB opened.')
+
+                            var db = event.target.result;
+
+                            var transaction = db.transaction(STORE_NAME, 'readwrite');
+                            var store = transaction.objectStore(STORE_NAME);
+
+                            var data = { id: '1', message: 'test' };
+                            var req = store.add(data);
+
+                            req.onsuccess = function () {
+                                console.log('Added.')
+
+                                registration.sync.register('send-msg:' + data.id)
+                                    .then(() => {
+                                        console.log('Sync registerd.');
+                                    })
+                                    .catch(console.error.bind(console));
+                            }
+                            req.onerror == function (event) {
+                                console.log('Added error.')
+                            }
+                        }
+                        openReq.onerror = function (event) {
+                            console.log('DB open error');
+                        }
+                    }
+            }).catch(console.error.bind(console));
+        // }, false);
+
+    </script>
+
+</body>
+
+</html>

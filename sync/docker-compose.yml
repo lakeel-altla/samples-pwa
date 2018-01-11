@@ -1,0 +1,12 @@
+version: '2'
+services:
+  data:
+    build: ./data
+    container_name: data-pwa-sync
+  app:
+    build: ./app
+    container_name: pwa-sync
+    ports: 
+      - 5000:5000
+    volumes_from:
+      - data

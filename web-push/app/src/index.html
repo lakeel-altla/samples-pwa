@@ -1,0 +1,125 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/primer/2.0.2/primer.css">
+    <link rel="manifest" href="./manifest.json">
+    <title>Notification Test</title>
+</head>
+
+<body>
+    <div class="center">
+
+        <dl>
+            <dt>
+                <label>Server Public Key</label>
+            </dt>
+            <dd>
+                <textarea id="server-public_key" class="input-block"></textarea>
+            </dd>
+        </dl>
+
+        <button id="subscribe">Subscribe</button>
+
+        <br>
+        <br>
+
+        <dl class="form">
+            <dt>
+                <label>Endpoint URL</label>
+            </dt>
+            <dd>
+                <textarea id="subscription-endpoint" class="input-block"></textarea>
+            </dd>
+            <dt>
+                <label>Public Key</label>
+            </dt>
+            <dd>
+                <textarea id="subscription-public-key" class="input-block"></textarea>
+            </dd>
+            <dt>
+                <label>Auth</label>
+            </dt>
+            <dd>
+                <textarea id="subscription-auth" class="input-block"></textarea>
+            </dd>
+        </dl>
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                navigator.serviceWorker.register('./service-worker.js');
+
+                document.querySelector('#subscribe')
+                    .onclick = function () {
+                        subscribe();
+                    }
+            }, false);
+
+            function subscribe() {
+                var inputtedServerPublicKey = document.querySelector('#server-public_key').value;
+                if (!inputtedServerPublicKey) {
+                    console.debug('Server public key is empty.')
+                    return;
+                }
+
+                var registration;
+                navigator.serviceWorker.ready.then((rg) => {
+                    console.debug('Service worker is readied.');
+                    registration = rg;
+                    return registration.pushManager.getSubscription();
+                }).then((subscription) => {
+                    isSubscribed = !(subscription === null);
+                    if (isSubscribed) {
+                        console.log('Already subscribed.');
+                        return subscription.unsubscribe();
+                    } else {
+                        console.log('Not subscribed.');
+                        return Promise.resolve();
+                    }
+                }).then(() => {
+                    var serverPublicKey = urlB64ToUint8Array(inputtedServerPublicKey);
+                    return registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: serverPublicKey
+                    });
+                }).then((subscription) => {
+                    console.debug('Subscription success.');
+
+                    var endpoint = document.querySelector('#subscription-endpoint');
+                    var key = document.querySelector('#subscription-public-key');
+                    var auth = document.querySelector('#subscription-auth');
+
+                    var rawKey = subscription.getKey ? subscription.getKey('p256dh') : '';
+                    key.value = rawKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(rawKey))) : '';
+
+                    var rawAuthSecret = subscription.getKey ? subscription.getKey('auth') : '';
+                    auth.value = rawAuthSecret ? btoa(String.fromCharCode.apply(null, new Uint8Array(rawAuthSecret))) : '';
+
+                    endpoint.value = subscription.endpoint;
+                })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            }
+
+            function urlB64ToUint8Array(base64String) {
+                const padding = '='.repeat((4 - base64String.length % 4) % 4);
+                const base64 = (base64String + padding)
+                    .replace(/\-/g, '+')
+                    .replace(/_/g, '/');
+
+                const rawData = window.atob(base64);
+                const outputArray = new Uint8Array(rawData.length);
+
+                for (let i = 0; i < rawData.length; ++i) {
+                    outputArray[i] = rawData.charCodeAt(i);
+                }
+                return outputArray;
+            }
+        </script>
+
+    </div>
+</body>
+
+</html>

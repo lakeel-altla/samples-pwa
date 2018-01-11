@@ -1,0 +1,17 @@
+{
+  "name": "notification-server",
+  "version": "1.0.0",
+  "description": "Request to FCM for notification.",
+  "main": "push.js",
+  "dependencies": {
+    "config": "^1.29.1",
+    "web-push": "^3.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "author": "",
+  "license": "ISC"
+}
