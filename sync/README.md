@@ -13,10 +13,10 @@ $ docker-compose up --build -d
 
 ```
 
-Access in the browser by navigating to ```http://localhost:5000```.
+Access in the browser by navigating to [http://localhost:5000](http://localhost:5000).
 
 ### Background sync
-Access the page at ```http://localhost:5000```.
+Access the page at [http://localhost:5000](http://localhost:5000).
 
 ![screen](./docs/screen.png)
 

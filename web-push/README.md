@@ -18,7 +18,7 @@ $ docker-compose up --build -d
 
 ```
 
-Access in the browser by navigating to ```http://localhost:7000```.
+Access in the browser by navigating to [http://localhost:7000](http://localhost:7000).
 
 ![screen](./docs/screen.png)
 

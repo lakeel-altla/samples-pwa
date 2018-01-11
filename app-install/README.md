@@ -13,7 +13,7 @@ $ docker-compose up --build -d
 
 ```
 
-Access in the browser by navigating to ```http://localhost:3000```.
+Access in the browser by navigating to [http://localhost:3000](http://localhost:3000).
 
 ### App install
 When access the page, install banner will be shown on top at screen. When click button on the banner, the application will be installed to Chrome apps.
@@ -21,6 +21,6 @@ For mobile browsers, the application will be installed on the home screen.
 
 ![screen](./docs/screen.png)
 
-![install_app](./docs/install_app.png)
+![app_install](./docs/app_install.png)
 
 ![chrome_apps](./docs/chrome_apps.png)

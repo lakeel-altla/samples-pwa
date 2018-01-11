@@ -13,10 +13,10 @@ $ docker-compose up --build -d
 
 ```
 
-Access in the browser by navigating to ```http://localhost:4000```.
+Access in the browser by navigating to [http://localhost:4000](http://localhost:4000).
 
 ### Working offline
-Access the page at ```http://localhost:4000```.
+Access the page at [http://localhost:4000](http://localhost:4000).
 
 ![screen](./docs/screen.png)
 
