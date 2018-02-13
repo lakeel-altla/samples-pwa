@@ -10,9 +10,6 @@
     <button id="sync-data">Sync</button>
 
     <script type="text/javascript">
-        // document.addEventListener('DOMContentLoaded', () => {
-        //     console.log('DOMContentLoaded')
-
         navigator.serviceWorker.register('./service-worker.js');
 
         navigator.serviceWorker.ready
@@ -61,8 +58,6 @@
                         }
                     }
             }).catch(console.error.bind(console));
-        // }, false);
-
     </script>
 
 </body>
