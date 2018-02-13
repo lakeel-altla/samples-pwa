@@ -1,7 +1,7 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
     './styles/main.css',
-    './assets/images/tricaratops.png'
+    './assets/images/triceratops.png'
 ];
 
 self.addEventListener('install', function (event) {
