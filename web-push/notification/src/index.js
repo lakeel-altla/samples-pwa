@@ -1,13 +1,9 @@
-'use strict';
+const SERVER_PUBLIC_KEY = process.env.NOTIFICATION_SERVER_PUBLIC_KEY;
+const SERVER_PRIVATE_KEY = process.env.NOTIFICATION_SERVER_PRIVATE_KEY;
 
-const config = require('config');
-
-const SERVER_PUBLIC_KEY = config.get('server.publicKey');
-const SERVER_PRIVATE_KEY = config.get('server.privateKey');
-
-const CLIENT_PUBLIC_KEY = config.get('client.publicKey');
-const CLIENT_AUTH = config.get('client.auth');
-const ENDPOINT = config.get('client.endpoint');
+const CLIENT_PUBLIC_KEY = process.env.NOTIFICATION_CLIENT_PUBLIC_KEY;
+const CLIENT_AUTH = process.env.NOTIFICATION_CLIENT_AUTH;
+const ENDPOINT = process.env.NOTIFICATION_ENDPOINT;
 
 const webpush = require('web-push');
 

@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: web-push
+  namespace: samples-web-push
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  tls:
+  - hosts:
+    - web-push.minikube.test
+    secretName: web-push
+  rules:
+  - host: web-push.minikube.test
+    http:
+      paths:
+      - backend:
+          serviceName: web-push
+          servicePort: 7000

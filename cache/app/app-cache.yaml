@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: app-cache
+  namespace: samples-app-cache
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app-cache
+    spec:
+      containers:
+      - name: app-cache
+        image: app-cache:0.1
+        ports:
+        - containerPort: 4000
+        volumeMounts:
+        - mountPath: "/var/log/nginx"
+          name: app-cache
+      volumes:
+        - name: app-cache
+          persistentVolumeClaim:
+            claimName: app-cache
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-cache
+  namespace: samples-app-cache
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 4000
+    targetPort: 4000
+    name: http
+  selector:
+    app: app-cache

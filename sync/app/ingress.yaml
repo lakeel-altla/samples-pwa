@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: app-sync
+  namespace: samples-app-sync
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  tls:
+  - hosts:
+    - app-sync.minikube.test
+    secretName: app-sync
+  rules:
+  - host: app-sync.minikube.test
+    http:
+      paths:
+      - backend:
+          serviceName: app-sync
+          servicePort: 5000

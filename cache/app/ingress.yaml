@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: app-cache
+  namespace: samples-app-cache
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  tls:
+  - hosts:
+    - app-cache.minikube.test
+    secretName: app-cache
+  rules:
+  - host: app-cache.minikube.test
+    http:
+      paths:
+      - backend:
+          serviceName: app-cache
+          servicePort: 4000

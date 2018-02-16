@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: app-sync
+  namespace: samples-app-sync
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app-sync
+    spec:
+      containers:
+      - name: app-sync
+        image: app-sync:0.1
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: "/var/log/nginx"
+          name: app-sync
+      volumes:
+        - name: app-sync
+          persistentVolumeClaim:
+            claimName: app-sync
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-sync
+  namespace: samples-app-sync
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+    name: http
+  selector:
+    app: app-sync

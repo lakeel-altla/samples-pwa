@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: samples-app-cache
+  labels:
+    name: samples-app-cache
