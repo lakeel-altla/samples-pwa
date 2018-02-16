@@ -129,7 +129,7 @@ Run Google Chrome and access in the browser by navigating to [https://app-sync.m
 ```
 
 ### Background sync
-Access the page at [http://localhost:5000](http://localhost:5000).
+Access the page at [https://app-sync.minikube.test](https://app-sync.minikube.test).
 
 ![screen](./docs/screen.png)
 
